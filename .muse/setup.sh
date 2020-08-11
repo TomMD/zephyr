@@ -25,7 +25,7 @@ install_sdk() {
         curl -LO "https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.11.3/$sdkfile"
     fi
     chmod +x zephyr-sdk-0.11.3-setup.run
-    ./$sdkfile -- -d ~/zephyr-sdk-0.11.3
+    ./$sdkfile -- -d ~/zephyr-sdk-0.11.3 -y
 }
 
 all_zephyr_setup() {
@@ -34,12 +34,15 @@ all_zephyr_setup() {
     init_west_in_zephyr
     west zephyr-export
     pip3 install --user -r scripts/requirements.txt
-    install_sdk
+    if [[ ! -d "$HOME/zephyr-sdk-0.11.3" ]] ; then
+        install_sdk
+    fi
+    source zephyr-env.sh
 }
 
 zephyr_build_sample() {
-    cmake -B build -GNinja -DBOARD=reel_board samples/hello_world
-    ninja -C build -t compdb
+    west build -b reel_board samples/hello_world -- -DCMAKE_EXPORT_COMPILE_COMMANDS=1
+    cp build/compile_commands.json .
 }
 
 all_zephyr_setup
