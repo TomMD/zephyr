@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+WEST=$HOME/.local/bin/west
+
 install_system_deps() {
     apt update
     apt install -y --no-install-recommends git cmake ninja-build gperf \
@@ -15,8 +17,8 @@ install_west() {
 }
 
 init_west_in_zephyr() {
-    west init $(pwd)
-    west update
+    $WEST init $(pwd)
+    $WEST update
 }
 
 install_sdk() {
@@ -32,7 +34,7 @@ all_zephyr_setup() {
     install_system_deps
     install_west
     init_west_in_zephyr
-    west zephyr-export
+    $WEST zephyr-export
     pip3 install --user -r scripts/requirements.txt
     if [[ ! -d "$HOME/zephyr-sdk-0.11.3" ]] ; then
         install_sdk
@@ -41,7 +43,7 @@ all_zephyr_setup() {
 }
 
 zephyr_build_sample() {
-    west build -b reel_board samples/hello_world -- -DCMAKE_EXPORT_COMPILE_COMMANDS=1
+    $WEST build -b reel_board samples/hello_world -- -DCMAKE_EXPORT_COMPILE_COMMANDS=1
     cp build/compile_commands.json .
 }
 
