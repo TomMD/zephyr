@@ -45,6 +45,7 @@ all_zephyr_setup() {
 zephyr_build_sample() {
     $WEST build -b qemu_x86 samples/hello_world -- -DCMAKE_EXPORT_COMPILE_COMMANDS=1
     cp build/compile_commands.json .
+    gawk -i inplace '{ gsub("x86_64-zephyr-elf-gcc","gcc"); print $1 }' compile_commands.json
 }
 
 all_zephyr_setup
