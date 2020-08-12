@@ -43,7 +43,7 @@ all_zephyr_setup() {
 }
 
 zephyr_build_sample() {
-    $WEST build -b reel_board samples/hello_world -- -DCMAKE_EXPORT_COMPILE_COMMANDS=1
+    $WEST build -b qemu_x86 samples/hello_world -- -DCMAKE_EXPORT_COMPILE_COMMANDS=1
     cp build/compile_commands.json .
 }
 
