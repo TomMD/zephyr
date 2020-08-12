@@ -10,7 +10,7 @@ install_system_deps() {
 
 install_west() {
     pip3 install --user -U west
-    echo 'export PATH=~/.local/bin:"$PATH"' >> ~/.bashrc
+    echo "export PATH=$HOME/.local/bin:$PATH" >> ~/.bashrc
     source ~/.bashrc
 }
 
