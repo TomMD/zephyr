@@ -49,6 +49,7 @@ zephyr_build_sample() {
     sed -i 's/-fno-reorder-functions//g' compile_commands.json
     sed -i 's/-fmacro-prefix-map\S*//g' compile_commands.json
     sed -i 's/-mpreferred-stack-boundary\S*//g' compile_commands.json
+    sed -i 's/-Wa\S*//g' compile_commands.json
 }
 
 all_zephyr_setup
